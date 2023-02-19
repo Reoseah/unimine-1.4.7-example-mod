@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+    id 'xyz.wagyourtail.unimined' version '0.4.0-SNAPSHOT'
+}
+
+group 'com.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs "$rootDir/libs"
+    }
+}
+
+unimined {
+    // debug, puts some things in build/unimined instead of ~/.gradle/caches/unimined
+    // I recommend you leave this off until unimined is stable
+    useGlobalCache = false
+}
+
+minecraft {
+    forge {
+        devFallbackNamespace = "searge"
+    }
+
+    mcRemapper.tinyRemapperConf = {
+        // most mcp mappings (except older format) dont include field desc
+        ignoreFieldDesc(true)
+        // this also fixes some issues with them, as it tells tiny remapper to try harder to resolve conflicts
+        ignoreConflicts(true)
+    }
+}
+
+mappings {
+    // ability to add custom mappings
+    // available targets are "CLIENT", "SERVER", "COMBINED"
+    getStub("CLIENT").withMappings(["searge", "named"]) {
+        c("ModLoader", "ModLoader", "modloader/ModLoader")
+        c("BaseMod", "BaseMod", "modloader/BaseMod")
+    }
+}
+
+sourceSets {
+    // enable the client configuration when not using combined (or mc <= 1.2.5)
+    client
+}
+
+dependencies {
+    minecraft "net.minecraft:minecraft:1.4.7"
+    forge "net.minecraftforge:forge:1.4.7-6.6.2.534"
+
+    //mappings "net.minecraftforge:forge:${rootProject.mc_version}-${rootProject.forge_version}:src@zip"
+}

@@ -1,0 +1,27 @@
+pluginManagement {
+    repositories {
+        maven {
+            name = 'Fabric'
+            url = "https://maven.fabricmc.net/"
+        }
+        maven {
+            name = 'Forge'
+            url = "https://maven.minecraftforge.net/"
+        }
+        maven {
+            name = 'WagYourTail'
+            url = "https://maven.wagyourtail.xyz/snapshots"
+        }
+        // OSS Mavens
+        maven { url "https://s01.oss.sonatype.org/content/repositories/releases" }
+        maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots" }
+        mavenCentral()
+        gradlePluginPortal() {
+            content {
+                excludeGroup "org.apache.logging.log4j"
+            }
+        }
+    }
+}
+
+rootProject.name = 'voldelegacy-example-mod'
